@@ -1,0 +1,8 @@
+@use '../configs/colors';
+@use '../configs/fonts';
+
+body {
+    height: 100vh;
+    font: fonts.$main;
+    color: colors.$neutral-very-dark-violet;
+}

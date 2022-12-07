@@ -1,0 +1,7 @@
+@use '../configs/colors';
+
+@mixin dark {
+    border: none;
+    background-color: colors.$neutral-very-dark-violet;
+    color: colors.$neutral-light-grayish-violet;
+}

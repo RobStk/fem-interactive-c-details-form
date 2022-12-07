@@ -1,0 +1,10 @@
+@use '../configs/spaces';
+@use '../utils/color-fills';
+@use '../utils/corners';
+
+button {
+    font: inherit;
+    padding: calc(spaces.$standard * 1.75);
+    @include corners.round-standard;
+    @include color-fills.dark;
+}

@@ -1,0 +1,19 @@
+@use '../configs/colors';
+@use '../configs/spaces';
+
+.interactive-card-details-form {
+    display: grid;
+    grid-template-rows: 225px 1fr;
+    row-gap: 4.3rem;
+
+    &__extender {
+        background-image: url('/images/bg-main-mobile.png');
+        background-size: cover;
+        position: relative;
+    }
+
+    &__main {
+        background-color: colors.$neutral-white;
+        padding: spaces.$large;
+    }
+}

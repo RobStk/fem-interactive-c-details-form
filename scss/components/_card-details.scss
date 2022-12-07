@@ -1,0 +1,41 @@
+@use '../configs/colors';
+
+.card-details {
+    display: grid;
+    gap: 1.5rem;
+
+    .holder {
+        grid-area: holder;
+    }
+    .number {
+        grid-area: number;
+    }
+    .date {
+        grid-area: date;
+    }
+    .cvc {
+        grid-area: cvc;
+    }
+    .submit {
+        grid-area: submit;
+    }
+
+    grid-template-areas: 
+        "holder holder holder holder"
+        "number number number number"
+        "date date cvc cvc"
+        "submit submit submit submit"
+    ;
+
+    .input-container {
+        display: flex;
+        flex-direction: column;
+        gap: 0.4em;
+
+        label {
+            text-transform: uppercase;
+            font-size: small;
+            letter-spacing: 2px;
+        }
+    }
+}

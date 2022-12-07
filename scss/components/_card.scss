@@ -1,0 +1,73 @@
+@use '../configs/colors';
+
+.card {
+    $width: 275px;
+    $height: 158px;
+    width: $width;
+    height: $height;
+    padding: 1.3rem;
+    color: colors.$neutral-light-grayish-violet;
+    background-size: $width $height;
+    background-repeat: no-repeat;
+}
+
+.card-front {
+    @extend .card;
+    background-image: url('/images/bg-card-front.png');
+    display: grid;
+    grid-template-rows: 30% 1fr;
+    gap: 25%;
+
+    position: absolute;
+    left: 5%;
+    top: 110px;
+    z-index: 1;
+
+    .card-logo {
+        img {
+            height: 100%;
+            object-fit: scale-down;
+        }
+    }
+
+    .card-content {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+    }
+
+    .card-number {
+        display: flex;
+        flex-direction: row;
+        column-gap: 0.5em;
+        letter-spacing: 1px;
+    }
+
+    .card-info {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        font-size: 0.6rem;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+    }
+}
+
+.card-back {
+    @extend .card;
+    background-image: url('/images/bg-card-back.png');
+    position: absolute;
+    right: 5%;
+    top: 20px;
+    padding: 8%;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+
+    .cvc {
+        text-align: right;
+        font-size: 0.55em;
+        letter-spacing: 1px;
+        line-height: 100%;
+    }
+}

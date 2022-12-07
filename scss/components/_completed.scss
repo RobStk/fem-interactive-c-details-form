@@ -1,0 +1,26 @@
+@use '../configs/colors';
+
+.completed {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    row-gap: 1.5rem;
+    text-align: center;
+
+    display: none;
+
+    h1 {
+        text-transform: uppercase;
+        font-size: 1.8em;
+        letter-spacing: 4px;
+        font-weight: 400;
+    }
+
+    p {
+        color: colors.$neutral-dark-grayish-violet;
+    }
+
+    button {
+        width: 100%;
+    }
+}

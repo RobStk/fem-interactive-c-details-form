@@ -1,1 +1,210 @@
 @import url("https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500&display=swap");
+html {
+  box-sizing: border-box;
+}
+html *,
+html *::before,
+html *::after {
+  box-sizing: inherit;
+}
+html * {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  height: 100vh;
+  font: 500 18px Space Grotesk, sans-serif;
+  color: hsl(278deg, 68%, 11%);
+}
+
+button {
+  font: inherit;
+  padding: 0.875em;
+  border-radius: 7px;
+  border: none;
+  background-color: hsl(278deg, 68%, 11%);
+  color: hsl(270deg, 3%, 87%);
+}
+
+input {
+  width: 100%;
+  font: inherit;
+  outline: none;
+  padding: 0.5em;
+  border-radius: 7px;
+}
+
+input[type=text] {
+  border: none;
+  border-color: hsl(270deg, 3%, 87%);
+  border-style: solid;
+  border-width: 1px;
+}
+input[type=text]::-moz-placeholder {
+  color: hsl(270deg, 3%, 87%);
+}
+input[type=text]:-ms-input-placeholder {
+  color: hsl(270deg, 3%, 87%);
+}
+input[type=text]::placeholder {
+  color: hsl(270deg, 3%, 87%);
+}
+
+input[type=submit] {
+  border: none;
+  background-color: hsl(278deg, 68%, 11%);
+  color: hsl(270deg, 3%, 87%);
+  padding: 0.875em;
+}
+
+.row {
+  display: flex;
+  -moz-column-gap: 1rem;
+       column-gap: 1rem;
+}
+
+.attribution {
+  font-size: 11px;
+  text-align: center;
+  padding-bottom: 0.2rem;
+}
+.attribution a {
+  color: hsl(228deg, 45%, 44%);
+}
+
+.card, .card-back, .card-front {
+  width: 275px;
+  height: 158px;
+  padding: 1.3rem;
+  color: hsl(270deg, 3%, 87%);
+  background-size: 275px 158px;
+  background-repeat: no-repeat;
+}
+
+.card-front {
+  background-image: url("/images/bg-card-front.png");
+  display: grid;
+  grid-template-rows: 30% 1fr;
+  gap: 25%;
+  position: absolute;
+  left: 5%;
+  top: 110px;
+  z-index: 1;
+}
+.card-front .card-logo img {
+  height: 100%;
+  -o-object-fit: scale-down;
+     object-fit: scale-down;
+}
+.card-front .card-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.card-front .card-number {
+  display: flex;
+  flex-direction: row;
+  -moz-column-gap: 0.5em;
+       column-gap: 0.5em;
+  letter-spacing: 1px;
+}
+.card-front .card-info {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  font-size: 0.6rem;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+.card-back {
+  background-image: url("/images/bg-card-back.png");
+  position: absolute;
+  right: 5%;
+  top: 20px;
+  padding: 8%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+.card-back .cvc {
+  text-align: right;
+  font-size: 0.55em;
+  letter-spacing: 1px;
+  line-height: 100%;
+}
+
+.card-details {
+  display: grid;
+  gap: 1.5rem;
+  grid-template-areas: "holder holder holder holder" "number number number number" "date date cvc cvc" "submit submit submit submit";
+}
+.card-details .holder {
+  grid-area: holder;
+}
+.card-details .number {
+  grid-area: number;
+}
+.card-details .date {
+  grid-area: date;
+}
+.card-details .cvc {
+  grid-area: cvc;
+}
+.card-details .submit {
+  grid-area: submit;
+}
+.card-details .input-container {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4em;
+}
+.card-details .input-container label {
+  text-transform: uppercase;
+  font-size: small;
+  letter-spacing: 2px;
+}
+
+.completed {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  row-gap: 1.5rem;
+  text-align: center;
+  display: none;
+}
+.completed h1 {
+  text-transform: uppercase;
+  font-size: 1.8em;
+  letter-spacing: 4px;
+  font-weight: 400;
+}
+.completed p {
+  color: hsl(279deg, 6%, 55%);
+}
+.completed button {
+  width: 100%;
+}
+
+.interactive-card-details-form {
+  display: grid;
+  grid-template-rows: 225px 1fr;
+  row-gap: 4.3rem;
+}
+.interactive-card-details-form__extender {
+  background-image: url("/images/bg-main-mobile.png");
+  background-size: cover;
+  position: relative;
+}
+.interactive-card-details-form__main {
+  background-color: hsl(0deg, 0%, 100%);
+  padding: 1.5em;
+}
+
+.main-container {
+  height: 100%;
+  display: grid;
+  grid-template-rows: 1fr -webkit-max-content;
+  grid-template-rows: 1fr max-content;
+}

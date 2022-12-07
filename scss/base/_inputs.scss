@@ -1,0 +1,28 @@
+@use '../configs/colors';
+@use '../configs/spaces';
+@use '../utils/color-fills';
+@use '../utils/corners';
+
+input {
+    width: 100%;
+    font: inherit;
+    outline: none;
+    padding: spaces.$standard;
+    @include corners.round-standard;
+}
+
+input[type=text] {
+    border: none;
+    border-color: colors.$neutral-light-grayish-violet;
+    border-style: solid;
+    border-width: 1px;
+
+    &::placeholder {
+        color: colors.$neutral-light-grayish-violet;
+    }
+}
+
+input[type=submit] {
+    @include color-fills.dark;
+    padding: calc(spaces.$standard * 1.75);
+}
