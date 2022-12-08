@@ -2,6 +2,7 @@
 @use '../configs/spaces';
 @use '../utils/color-fills';
 @use '../utils/corners';
+@use '../utils/fancy-borders';
 
 input {
     width: 100%;
@@ -17,6 +18,8 @@ input[type=text] {
     border-color: colors.$neutral-light-grayish-violet;
     border-style: solid;
     border-width: 1px;
+    padding: calc(spaces.$standard*1.2) calc(spaces.$standard*1.5);
+    color: colors.$neutral-very-dark-violet;
 
     &::placeholder {
         color: colors.$neutral-light-grayish-violet;

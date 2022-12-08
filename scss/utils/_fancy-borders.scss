@@ -1,0 +1,22 @@
+@mixin gradient-borders ($gradient-colors, $border-width: 1px) {
+
+    background: linear-gradient(135deg, $gradient-colors);
+    padding: $border-width;
+    > *,
+    > input {
+        border: $border-width solid transparent;
+        border-radius: inherit;
+    }
+}
+
+@mixin color-borders ($color, $border-width: 1px) {
+
+    background-color: $color;
+    padding: $border-width;
+
+    > *,
+    > input {
+        border: $border-width solid transparent;
+        border-radius: inherit;
+    }
+}

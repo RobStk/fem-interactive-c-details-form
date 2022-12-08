@@ -1,0 +1,16 @@
+@use '../configs/colors';
+@use '../configs/gradients';
+@use '../utils/corners';
+@use '../utils/fancy-borders';
+
+.border-container {
+    @include corners.round-standard;
+
+    &.active {
+        @include fancy-borders.gradient-borders(gradients.$primary-active-input-border);
+    }
+
+    &.error {
+        @include fancy-borders.color-borders(colors.$primary-red-input-errors);
+    }
+}

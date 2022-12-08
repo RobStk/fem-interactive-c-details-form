@@ -41,6 +41,8 @@ input[type=text] {
   border-color: hsl(270deg, 3%, 87%);
   border-style: solid;
   border-width: 1px;
+  padding: 0.6em 0.75em;
+  color: hsl(278deg, 68%, 11%);
 }
 input[type=text]::-moz-placeholder {
   color: hsl(270deg, 3%, 87%);
@@ -75,6 +77,28 @@ input[type=submit] {
 }
 .attribution a {
   color: hsl(228deg, 45%, 44%);
+}
+
+.border-container {
+  border-radius: 7px;
+}
+.border-container.active {
+  background: linear-gradient(135deg, hsl(249deg, 99%, 64%), hsl(278deg, 94%, 30%));
+  padding: 1px;
+}
+.border-container.active > *,
+.border-container.active > input {
+  border: 1px solid transparent;
+  border-radius: inherit;
+}
+.border-container.error {
+  background-color: hsl(0deg, 100%, 66%);
+  padding: 1px;
+}
+.border-container.error > *,
+.border-container.error > input {
+  border: 1px solid transparent;
+  border-radius: inherit;
 }
 
 .card, .card-back, .card-front {
