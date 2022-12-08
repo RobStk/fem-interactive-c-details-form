@@ -1,27 +1,22 @@
 @use '../configs/colors';
 
 .card {
-    $width: 275px;
-    $height: 158px;
-    width: $width;
-    height: $height;
-    padding: 1.3rem;
     color: colors.$neutral-light-grayish-violet;
-    background-size: $width $height;
     background-repeat: no-repeat;
+    border-radius: 9px;
+
+    -webkit-box-shadow: 0px 61px 70px 4px rgba(colors.$neutral-very-dark-violet, $alpha: 0.15);
+    -moz-box-shadow: 0px 61px 70px 4px rgba(colors.$neutral-very-dark-violet, $alpha: 0.15);
+    box-shadow: 0px 61px 70px 4px rgba(colors.$neutral-very-dark-violet, $alpha: 0.15);
 }
 
 .card-front {
     @extend .card;
+    padding: 1.3rem;
     background-image: url('/images/bg-card-front.png');
     display: grid;
     grid-template-rows: 30% 1fr;
     gap: 25%;
-
-    position: absolute;
-    left: 5%;
-    top: 110px;
-    z-index: 1;
 
     .card-logo {
         img {
@@ -47,7 +42,7 @@
         display: flex;
         flex-direction: row;
         justify-content: space-between;
-        font-size: 0.6rem;
+        font-size: 0.6em;
         letter-spacing: 1px;
         text-transform: uppercase;
     }
@@ -56,15 +51,12 @@
 .card-back {
     @extend .card;
     background-image: url('/images/bg-card-back.png');
-    position: absolute;
-    right: 5%;
-    top: 20px;
-    padding: 8%;
     display: flex;
     align-items: center;
     justify-content: flex-end;
 
     .cvc {
+        padding-right: 13%;
         text-align: right;
         font-size: 0.55em;
         letter-spacing: 1px;

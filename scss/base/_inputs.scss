@@ -8,6 +8,7 @@ input {
     font: inherit;
     outline: none;
     padding: spaces.$standard;
+    cursor: pointer;
     @include corners.round-standard;
 }
 
