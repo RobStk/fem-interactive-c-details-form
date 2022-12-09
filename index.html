@@ -11,6 +11,7 @@
   <title>Frontend Mentor | Interactive card details form</title>
 
   <link rel="stylesheet" href="css/main.css">
+  <script src="js/app.js" type="module"></script>
 </head>
 
 <body>
@@ -58,12 +59,12 @@
           </div>
           <div class="input-container date">
             <label for="expDateM">Exp. Date (MM/YY)</label>
-            <div class="row" id="expDate">
+            <div class="row" class="expDate">
               <div class="border-container">
-                <input type="text" placeholder="MM" id="expDateM">
+                <input type="text" placeholder="MM" id="expDateM" class="month">
               </div>
               <div class="border-container">
-                <input type="text" placeholder="YY" id="expDateY">
+                <input type="text" placeholder="YY" id="expDateY" class="year">
               </div>
             </div>
           </div>
