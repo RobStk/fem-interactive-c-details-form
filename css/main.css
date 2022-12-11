@@ -88,7 +88,7 @@ input[type=submit] {
 }
 .border-container.active > *,
 .border-container.active > input {
-  border: 1px solid transparent;
+  border: none;
   border-radius: inherit;
 }
 .border-container.error {
@@ -97,7 +97,7 @@ input[type=submit] {
 }
 .border-container.error > *,
 .border-container.error > input {
-  border: 1px solid transparent;
+  border: none;
   border-radius: inherit;
 }
 
@@ -184,6 +184,11 @@ input[type=submit] {
   text-transform: uppercase;
   font-size: small;
   letter-spacing: 2px;
+}
+.card-details .input-container::after {
+  content: attr(data-error-msg);
+  font-size: small;
+  color: hsl(0deg, 100%, 66%);
 }
 
 .completed {

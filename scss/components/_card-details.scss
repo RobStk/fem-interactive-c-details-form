@@ -37,5 +37,11 @@
             font-size: small;
             letter-spacing: 2px;
         }
+
+        &::after {
+            content: attr(data-error-msg);
+            font-size: small;
+            color: colors.$primary-red-input-errors;
+        }
     }
 }

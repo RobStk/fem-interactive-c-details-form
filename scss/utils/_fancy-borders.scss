@@ -4,7 +4,7 @@
     padding: $border-width;
     > *,
     > input {
-        border: $border-width solid transparent;
+        border: none;
         border-radius: inherit;
     }
 }
@@ -16,7 +16,7 @@
 
     > *,
     > input {
-        border: $border-width solid transparent;
+        border: none;
         border-radius: inherit;
     }
 }
