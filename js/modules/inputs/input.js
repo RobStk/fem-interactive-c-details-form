@@ -11,15 +11,7 @@ export default class Input extends IInput {
     /* ---------------------------------------------------- */
 
     get getHTMLElement() { return this.#getHTMLElement; }
-    get getValidationErrors() { return this.#getValidationErrors; }
-
-
-    /* ---------------------------------------------------- */
-    /* Protected properties                                 */
-    /* ---------------------------------------------------- */
-
-    /** @protected */
-    _mainElement;
+    get getValidationErrors() { return this._getValidationErrors; }
 
 
     /* ---------------------------------------------------- */
@@ -36,10 +28,32 @@ export default class Input extends IInput {
 
 
     /* ---------------------------------------------------- */
+    /* Protected properties                                 */
+    /* ---------------------------------------------------- */
+
+    /** @protected */
+    _mainElement;
+
+
+    /* ---------------------------------------------------- */
     /* Methods                                              */
     /* ---------------------------------------------------- */
 
     /**
+     * @protected
+     * @returns {string[]}  Errors Array
+     */
+    _getValidationErrors() {
+        const errors = [];
+        const isEmpty = this.#checkEmptiness();
+        if (isEmpty) errors.push(isEmpty);
+        return errors;
+    }
+
+    // ----------------------------
+
+    /**
+     * @private
      * @returns {HTMLInputElement}  HTMLInputElement
      */
     #getHTMLElement() {
@@ -49,28 +63,16 @@ export default class Input extends IInput {
     // ----------------------------
 
     /**
-     * @returns {string[]}  Errors Array
-     */
-    #getValidationErrors() {
-        const emptyErrorMsg = "Can't be blank.";
-        const errors = [];
-
-        const isEmpty = this.#checkEmptiness();
-        if (isEmpty) errors.push(emptyErrorMsg);
-
-        return errors;
-    }
-
-    // ----------------------------
-
-    /**
-     * @returns {Boolean}   TRUE if input's value is empty or FALSE otherwise.
+     * @private
+     * @returns {string}    Returns error message string. 
+     *                      If no errors were found, the string is empty.
      */
     #checkEmptiness() {
+        const errorMsg = "Can't be blank.";
         const inputValue = this._mainElement.value;
-        if (!inputValue) return true;
-        if (inputValue == "") return true;
-        return false;
+        if (!inputValue) return errorMsg;
+        if (inputValue == "") return errorMsg;
+        return "";
     }
 
     // ----------------------------

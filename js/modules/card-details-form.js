@@ -1,26 +1,28 @@
 /**
- * @typedef {import('./input-interface').default} Input
+ * @typedef {import('./input-module-interface').default} IInputModule
  */
-export default class CardDetailsModule {
-    /* ---------------------------------------------------- */
-    /* Private properties                                   */
-    /* ---------------------------------------------------- */
-    #mainElement;
-    #inputs;
 
+export default class CardDetailsModule {
 
     /* ---------------------------------------------------- */
     /* Constructor                                          */
     /* ---------------------------------------------------- */
     /**
      * @param {HTMLFormElement} htmlFormElement
-     * @param {Input[]} inputs
+     * @param {IInputModule[]} inputModules
      */
-    constructor(htmlFormElement, inputs = []) {
+    constructor(htmlFormElement, inputModules = []) {
         this.#mainElement = htmlFormElement;
-        this.#inputs = inputs;
+        this.#inputModules = inputModules;
         this.#mainElement.addEventListener("submit", this.#handleSubmit.bind(this));
     }
+
+
+    /* ---------------------------------------------------- */
+    /* Private properties                                   */
+    /* ---------------------------------------------------- */
+    #mainElement;
+    #inputModules;
 
 
     /* ---------------------------------------------------- */
@@ -34,12 +36,9 @@ export default class CardDetailsModule {
     #handleSubmit(event) {
         event.preventDefault();
         let validationSuccessful = true;
-        this.#inputs.forEach(input => {
-            const errors = input.getValidationErrors();
-            if (errors.length) {
-                validationSuccessful = false;
-                this.#putErrorMsg(input.getHTMLElement(), errors[0]);
-            }
+        this.#inputModules.forEach(inputModule => {
+            const isValid = inputModule.validate();
+            if (!isValid) validationSuccessful = false;
         });
         if (validationSuccessful) this.#finishSubmit();
     }
@@ -50,17 +49,6 @@ export default class CardDetailsModule {
      * @private
      */
     #finishSubmit() {
-        throw new Error("Not implemented method"); //TODO
-    }
-
-    // ----------------------------
-
-    /**
-     * @private
-     */
-    #putErrorMsg(element, msg) {
-        console.log("Element:", element);
-        console.log("Error:", msg);
         throw new Error("Not implemented method"); //TODO
     }
 
