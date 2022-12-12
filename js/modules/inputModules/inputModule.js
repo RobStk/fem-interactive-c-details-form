@@ -52,22 +52,24 @@ export default class InputModule extends IInputModule {
      * @returns {Boolean}   FALSE on error or TRUE otherwise
      */
     #validate() {
+        this.#resetErrorState();
         let validationSuccessful = true;
-        this.#inputs.forEach(input => {
+
+        let i = 0;
+        let errorFound = false;
+        while (!errorFound && i < this.#inputs.length) {
+            const input = this.#inputs[i];
             const errorsArr = input.getValidationErrors();
             if (errorsArr.length) {
+                errorFound = true;
                 this.#error = errorsArr[0];
                 this.#setErrorState(input);
                 validationSuccessful = false;
             }
-        });
-
-        if (validationSuccessful) {
-            this.#resetErrorState();
-            return true;
+            i++;
         }
+        if (validationSuccessful) { return true; }
         return false;
-
     }
 
     // ----------------------------
@@ -92,8 +94,10 @@ export default class InputModule extends IInputModule {
     #resetErrorState() {
         this.#HTMLContainer.classList.remove("error");
         this.#HTMLContainer.removeAttribute("data-error-msg");
-        const inputBorderElement = this.#HTMLContainer.querySelector(".border-container");
-        inputBorderElement.classList.remove("error");
+        const inputBorderElements = this.#HTMLContainer.querySelectorAll(".border-container");
+        for (const element of inputBorderElements) {
+            element.classList.remove("error");
+        }        
     }
 
     // ----------------------------
