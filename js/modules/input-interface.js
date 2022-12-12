@@ -11,14 +11,14 @@ export default class IInput {
     /**
      * @returns {HTMLInputElement} HTMLInputElement
      */
-    getHTMLElement() { throw new Error("Virtual method must be implemented."); }
+    getHTMLElement() { console.warn("Virtual method must be implemented."); }
 
     // ----------------------------
 
     /**
      * @returns {String[]}   Errors array.
      */
-    getValidationErrors() { throw new Error("Virtual method must be implemented."); }
+    getValidationErrors() { console.warn("Virtual method must be implemented."); }
 
     // ----------------------------
 }

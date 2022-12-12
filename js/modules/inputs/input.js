@@ -1,3 +1,7 @@
+/**
+ * @typedef {import('../validation-service-interface').default} IValidationService
+ */
+
 import IInput from "../input-interface.js";
 
 /**
@@ -19,11 +23,17 @@ export default class Input extends IInput {
     /* ---------------------------------------------------- */
 
     /**
-     * @param {HTMLInputElement} htmlInputElement 
+     * @param {HTMLInputElement} htmlInputElement
+     * @param {IValidationService[]|IValidationService|null} validators
      */
-    constructor(htmlInputElement) {
+    constructor(htmlInputElement, validators) {
         super();
-        this._mainElement = htmlInputElement;
+        this.#mainElement = htmlInputElement;
+        const validatorsIsArray = Array.isArray(validators);
+        if (validatorsIsArray) this.#validators = validators;
+        else this.#validators = [validators];
+
+        if (!validators) this.#validators = [];
     }
 
 
@@ -31,8 +41,14 @@ export default class Input extends IInput {
     /* Protected properties                                 */
     /* ---------------------------------------------------- */
 
-    /** @protected */
-    _mainElement;
+    /** @private */
+    #mainElement;
+
+    /**
+     * @private
+     * @type {IValidationService[]}
+     */
+    #validators;
 
 
     /* ---------------------------------------------------- */
@@ -44,9 +60,12 @@ export default class Input extends IInput {
      * @returns {string[]}  Errors Array
      */
     _getValidationErrors() {
+        const value = this.#mainElement.value;
         const errors = [];
-        const isEmpty = this.#checkEmptiness();
-        if (isEmpty) errors.push(isEmpty);
+        this.#validators.forEach(validator => {
+            const error = validator.validate(value);
+            if (error) errors.push(error);
+        });
         return errors;
     }
 
@@ -57,22 +76,7 @@ export default class Input extends IInput {
      * @returns {HTMLInputElement}  HTMLInputElement
      */
     #getHTMLElement() {
-        return this._mainElement;
-    }
-
-    // ----------------------------
-
-    /**
-     * @private
-     * @returns {string}    Returns error message string. 
-     *                      If no errors were found, the string is empty.
-     */
-    #checkEmptiness() {
-        const errorMsg = "Can't be blank.";
-        const inputValue = this._mainElement.value;
-        if (!inputValue) return errorMsg;
-        if (inputValue == "") return errorMsg;
-        return "";
+        return this.#mainElement;
     }
 
     // ----------------------------

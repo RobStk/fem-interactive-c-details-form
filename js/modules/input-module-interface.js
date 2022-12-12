@@ -11,7 +11,7 @@ export default class IInputModule {
     /**
      * @returns {Boolean}       FALSE on error or TRUE otherwise
      */
-    validate() { throw new Error("Virtual method must be implemented."); }
+    validate() { console.warn("Virtual method must be implemented."); }
 
     // ----------------------------
 }
