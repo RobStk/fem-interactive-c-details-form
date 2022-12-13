@@ -17,10 +17,12 @@ export default class NumberValidationService extends IValidationService {
     /* Constructor                                          */
     /* ---------------------------------------------------- */
     /**
-     * @param {string} errorMsg 
+     * @param {Boolean} ignoringSpaces
+     * @param {string} errorMsg       
      */
-    constructor(errorMsg = "Wrong format. Numbers only.") {
+    constructor(ignoringSpaces = true, errorMsg = "Wrong format. Numbers only.") {
         super();
+        this.#ignoringSpaces = ignoringSpaces;
         this.#errorMsg = errorMsg;
     }
 
@@ -30,6 +32,9 @@ export default class NumberValidationService extends IValidationService {
     /* ---------------------------------------------------- */
 
     /** @private */
+    #ignoringSpaces;
+
+    /** @private */
     #errorMsg;
 
 
@@ -37,8 +42,14 @@ export default class NumberValidationService extends IValidationService {
     /* Methods                                              */
     /* ---------------------------------------------------- */
 
+    /** @private */
     #validate(value) {
-        const isNotNumber = isNaN(value);
+        let validationValue = value;
+        if (this.#ignoringSpaces) {
+            validationValue = validationValue.split(" ");
+            validationValue = validationValue.join("");
+        }
+        const isNotNumber = isNaN(validationValue);
         if (isNotNumber) return this.#errorMsg;
         return "";
     }
