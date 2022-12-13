@@ -4,6 +4,7 @@ import CVCValidationService from "./validation-services/cvc-validation-service.j
 import EmptyValidationService from "./validation-services/empty-validation-service.js";
 import MonthValidationService from "./validation-services/month-validation-service.js";
 import NumberValidationService from "./validation-services/number-validation-service.js";
+import SlotsValidationService from "./validation-services/slots-validation-service.js";
 import YearValidationService from "./validation-services/year-validation-service.js";
 
 export default class CardDetailsService {
@@ -105,6 +106,7 @@ export default class CardDetailsService {
         //Validators
         const emptyValidator = new EmptyValidationService();
         const numberValidator = new NumberValidationService();
+        const cardSlotsValidator = new SlotsValidationService(16, 16, "Wrong format. Please enter 16 digits.");
         const monthValidator = new MonthValidationService();
         const yearValidator = new YearValidationService();
         const cvcValidator = new CVCValidationService();
@@ -116,6 +118,7 @@ export default class CardDetailsService {
         const cardNumberValidators = [];
         cardNumberValidators.push(emptyValidator);
         cardNumberValidators.push(numberValidator);
+        cardNumberValidators.push(cardSlotsValidator);
 
         const monthValidators = [];
         monthValidators.push(emptyValidator);
