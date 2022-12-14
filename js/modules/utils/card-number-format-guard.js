@@ -1,15 +1,26 @@
-export default class CardNumberFormatGuard {
+import IEventSubscriber from "./event-subscriber-interface.js";
+
+/**
+ * @class
+ * @implements {IEventSubscriber}
+ */
+export default class CardNumberFormatGuard extends IEventSubscriber {
+
+    /* ---------------------------------------------------- */
+    /* Interface                                            */
+    /* ---------------------------------------------------- */
+
+    get emit() { return this.#emit; }
 
     /* ---------------------------------------------------- */
     /* Constructor                                          */
     /* ---------------------------------------------------- */
 
     /**
-     * @param {HTMLInputElement} cardNumberInputElement 
      * @param {number} maxLength
      */
-    constructor(cardNumberInputElement, maxLength = 16) {
-        cardNumberInputElement.addEventListener("input", this.#handleInput.bind(this));
+    constructor(maxLength = 16) {
+        super();
         this.#maxLength = maxLength;
     }
 
@@ -24,15 +35,10 @@ export default class CardNumberFormatGuard {
     /* Methods                                              */
     /* ---------------------------------------------------- */
 
-    /**
-     * @private
-     * @param {InputEvent} inputEvent
-     */
-    #handleInput(inputEvent) {
-        inputEvent.preventDefault();
+    #emit(inputEvent) {
         const baseValue = inputEvent.target.value;
         const value = this.#manageSpaces(baseValue);
-        inputEvent.target.value = value;
+        inputEvent.target.value = value;        
     }
 
     /**
@@ -43,7 +49,7 @@ export default class CardNumberFormatGuard {
     #manageSpaces(value) {
         const partialValue = value.split(" ");
         let valueWithoutSpaces = partialValue.join("");
-        valueWithoutSpaces = valueWithoutSpaces.slice(0, 16);
+        valueWithoutSpaces = valueWithoutSpaces.slice(0, this.#maxLength);
         let newValue = "";
         for (let index = 0; index < valueWithoutSpaces.length; index++) {
             const letter = valueWithoutSpaces[index];

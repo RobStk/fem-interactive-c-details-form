@@ -14,10 +14,10 @@ export default class CardDetailsService {
     /* Constructor                                          */
     /* ---------------------------------------------------- */
     /**
-     * @param {HTMLFormElement} htmlFormElement
+     * @param {htmlElement} htmlElement
      */
-    constructor(htmlFormElement) {
-        this.#mainElement = htmlFormElement;
+    constructor(htmlElement) {
+        this.#mainElement = htmlElement;
         this.#mainElement.addEventListener("submit", this.#handleSubmit.bind(this));
 
         this.#initializeValidators();
@@ -36,28 +36,23 @@ export default class CardDetailsService {
         const cvcInputElement = this.#mainElement.querySelector(".cvc input");
         const cvcInputContainer = cvcInputElement.closest(".input-container");
 
-        //Modules
+        //Inputs
         const nameInput = new Input(nameInputElement, this.#validationSets.name);
-        const nameInputModule = new InputModule(nameInputContainer, nameInput);
-
         const cardNumberInput = new Input(cardNumberInputElement, this.#validationSets.cardNumber);
-        const cardNumberInputModule = new InputModule(cardNumberInputContainer, cardNumberInput);
-
         const monthInput = new Input(monthInputElement, this.#validationSets.month);
         const yearInput = new Input(yearInputElement, this.#validationSets.year);
-        const dateInputs = [monthInput, yearInput];
-        const dateInputModule = new InputModule(dateInputContainer, dateInputs);
-
         const cvcInput = new Input(cvcInputElement, this.#validationSets.cvc);
-        const cvcInputModule = new InputModule(cvcInputContainer, cvcInput);
 
+        //Module
         this.#inputModules = [];
-        this.#inputModules.push(nameInputModule);
-        this.#inputModules.push(cardNumberInputModule);
-        this.#inputModules.push(dateInputModule);
-        this.#inputModules.push(cvcInputModule);
+        this.#inputModules.push(new InputModule(nameInputContainer, nameInput));
+        this.#inputModules.push(new InputModule(cardNumberInputContainer, cardNumberInput));
+        this.#inputModules.push(new InputModule(dateInputContainer, [monthInput, yearInput]));
+        this.#inputModules.push(new InputModule(cvcInputContainer, cvcInput));
 
-        new CardNumberFormatGuard(cardNumberInputElement);
+        //Event Subscribers
+        const cardNumberGuard = new CardNumberFormatGuard();
+        cardNumberInput.addInputSubscribers(cardNumberGuard);
     }
 
 
