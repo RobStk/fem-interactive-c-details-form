@@ -1,8 +1,8 @@
 /**
- * @typedef {import('../validation-service-interface').default} IValidationService
+ * @typedef {import('../validation-services/validation-service-interface').default} IValidationService
  */
 
-import IInput from "../input-interface.js";
+import IInput from "./input-interface.js";
 
 /**
  * @class
@@ -15,7 +15,7 @@ export default class Input extends IInput {
     /* ---------------------------------------------------- */
 
     get getHTMLElement() { return this.#getHTMLElement; }
-    get getValidationErrors() { return this._getValidationErrors; }
+    get getValidationErrors() { return this.#getValidationErrors; }
 
 
     /* ---------------------------------------------------- */
@@ -38,7 +38,7 @@ export default class Input extends IInput {
 
 
     /* ---------------------------------------------------- */
-    /* Protected properties                                 */
+    /* Private properties                                   */
     /* ---------------------------------------------------- */
 
     /** @private */
@@ -56,10 +56,10 @@ export default class Input extends IInput {
     /* ---------------------------------------------------- */
 
     /**
-     * @protected
+     * @private
      * @returns {string[]}  Errors Array
      */
-    _getValidationErrors() {
+    #getValidationErrors() {
         const value = this.#mainElement.value;
         const errors = [];
         this.#validators.forEach(validator => {

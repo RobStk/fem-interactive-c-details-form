@@ -1,4 +1,4 @@
-import IValidationService from "../validation-service-interface.js";
+import IValidationService from "./validation-service-interface.js";
 
 /**
  * @class

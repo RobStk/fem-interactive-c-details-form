@@ -1,4 +1,4 @@
-import InputModule from "./inputModules/inputModule.js";
+import InputModule from "./input-modules/input-module.js";
 import Input from "./inputs/input.js";
 import CardNumberFormatGuard from "./utils/card-number-format-guard.js";
 import CVCValidationService from "./validation-services/cvc-validation-service.js";

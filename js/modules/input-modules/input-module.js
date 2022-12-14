@@ -1,8 +1,8 @@
 /**
- * @typedef {import('../input-interface').default} IInput
+ * @typedef {import('../inputs/input-interface').default} IInput
  */
 
-import IInputModule from "../input-module-interface.js";
+import IInputModule from "./input-module-interface.js";
 
 /**
  * @class
@@ -97,7 +97,7 @@ export default class InputModule extends IInputModule {
         const inputBorderElements = this.#HTMLContainer.querySelectorAll(".border-container");
         for (const element of inputBorderElements) {
             element.classList.remove("error");
-        }        
+        }
     }
 
     // ----------------------------
