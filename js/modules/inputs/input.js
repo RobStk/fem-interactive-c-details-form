@@ -8,7 +8,6 @@ import IInput from "./input-interface.js";
 /**
  * @class
  * @implements {IInput}
- * @inheritdoc
  */
 export default class Input extends IInput {
 
@@ -73,7 +72,6 @@ export default class Input extends IInput {
     /* ---------------------------------------------------- */
 
     /**
-     * @private
      * @returns {string[]}  Errors Array
      */
     #getValidationErrors() {
@@ -89,7 +87,6 @@ export default class Input extends IInput {
     // ----------------------------
 
     /**
-     * @private
      * @returns {HTMLInputElement}  HTMLInputElement
      */
     #getHTMLElement() {
@@ -100,7 +97,6 @@ export default class Input extends IInput {
 
     /**
      * @param {IEventSubscriber|IEventSubscriber[]} newSubscribers 
-     * @returns 
      */
     #addInputSubscribers(newSubscribers) {
         if (!newSubscribers) return;

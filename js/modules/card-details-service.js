@@ -1,6 +1,10 @@
+import CardDetailsForm from "./card-details-form/card-details-form.js";
+import Card from "./card/card.js";
 import InputModule from "./input-modules/input-module.js";
 import Input from "./inputs/input.js";
+import AutoFiller from "./utils/auto-filler.js";
 import CardNumberFormatGuard from "./utils/card-number-format-guard.js";
+import CVCFormatGuard from "./utils/cvc-format-guard.js";
 import CVCValidationService from "./validation-services/cvc-validation-service.js";
 import EmptyValidationService from "./validation-services/empty-validation-service.js";
 import MonthValidationService from "./validation-services/month-validation-service.js";
@@ -20,39 +24,43 @@ export default class CardDetailsService {
         this.#mainElement = htmlElement;
         this.#mainElement.addEventListener("submit", this.#handleSubmit.bind(this));
 
+        const formElement = this.#mainElement.querySelector(".card-details");
+        this.#form = new CardDetailsForm(formElement);
+
+        const cardElement = this.#mainElement.querySelector(".interactive-card-details-form__extender");
+        this.#card = new Card(cardElement);
+
         this.#initializeValidators();
 
-        //HTML Elements
-        const nameInputElement = this.#mainElement.querySelector(".holder input");
-        const nameInputContainer = nameInputElement.closest(".input-container");
-
-        const cardNumberInputElement = this.#mainElement.querySelector(".number input");
-        const cardNumberInputContainer = cardNumberInputElement.closest(".input-container");
-
-        const monthInputElement = this.#mainElement.querySelector(".date .month");
-        const yearInputElement = this.#mainElement.querySelector(".date .year");
-        const dateInputContainer = monthInputElement.closest(".input-container");
-
-        const cvcInputElement = this.#mainElement.querySelector(".cvc input");
-        const cvcInputContainer = cvcInputElement.closest(".input-container");
-
         //Inputs
-        const nameInput = new Input(nameInputElement, this.#validationSets.name);
-        const cardNumberInput = new Input(cardNumberInputElement, this.#validationSets.cardNumber);
-        const monthInput = new Input(monthInputElement, this.#validationSets.month);
-        const yearInput = new Input(yearInputElement, this.#validationSets.year);
-        const cvcInput = new Input(cvcInputElement, this.#validationSets.cvc);
+        const nameInput = new Input(this.#form.nameInputElement, this.#validationSets.name);
+        const cardNumberInput = new Input(this.#form.cardNumberInputElement, this.#validationSets.cardNumber);
+        const monthInput = new Input(this.#form.monthInputElement, this.#validationSets.month);
+        const yearInput = new Input(this.#form.yearInputElement, this.#validationSets.year);
+        const cvcInput = new Input(this.#form.cvcInputElement, this.#validationSets.cvc);
 
-        //Module
+        //Modules
         this.#inputModules = [];
-        this.#inputModules.push(new InputModule(nameInputContainer, nameInput));
-        this.#inputModules.push(new InputModule(cardNumberInputContainer, cardNumberInput));
-        this.#inputModules.push(new InputModule(dateInputContainer, [monthInput, yearInput]));
-        this.#inputModules.push(new InputModule(cvcInputContainer, cvcInput));
+        this.#inputModules.push(new InputModule(this.#form.nameInputContainer, nameInput));
+        this.#inputModules.push(new InputModule(this.#form.cardNumberInputContainer, cardNumberInput));
+        this.#inputModules.push(new InputModule(this.#form.dateInputContainer, [monthInput, yearInput]));
+        this.#inputModules.push(new InputModule(this.#form.cvcInputContainer, cvcInput));
 
         //Event Subscribers
         const cardNumberGuard = new CardNumberFormatGuard();
+        const cvcGuard = new CVCFormatGuard(3);
+        const numberAutoFiller = new AutoFiller(this.#card.cardNumberElement);
+        const nameAutoFiller = new AutoFiller(this.#card.cardHolderElement);
+        const monthAutoFiller = new AutoFiller(this.#card.expMonthElement);
+        const yearAutoFiller = new AutoFiller(this.#card.expYearElement);
+        const cvcAutoFiller = new AutoFiller(this.#card.cvcElement);
         cardNumberInput.addInputSubscribers(cardNumberGuard);
+        cvcInput.addInputSubscribers(cvcGuard);
+        cardNumberInput.addInputSubscribers(numberAutoFiller);
+        nameInput.addInputSubscribers(nameAutoFiller);
+        monthInput.addInputSubscribers(monthAutoFiller);
+        yearInput.addInputSubscribers(yearAutoFiller);
+        cvcInput.addInputSubscribers(cvcAutoFiller);
     }
 
 
@@ -62,6 +70,12 @@ export default class CardDetailsService {
 
     /** @private */
     #mainElement;
+
+    /** @private */
+    #form;
+
+    /** @private */
+    #card;
 
     /** @private */
     #inputModules;
@@ -75,7 +89,6 @@ export default class CardDetailsService {
     /* ---------------------------------------------------- */
 
     /**
-     * @private
      * @param {SubmitEvent} event 
      */
     #handleSubmit(event) {
@@ -90,9 +103,6 @@ export default class CardDetailsService {
 
     // ----------------------------
 
-    /**
-     * @private
-     */
     #finishSubmit() {
         throw new Error("Not implemented method"); //TODO
     }
