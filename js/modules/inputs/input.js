@@ -1,6 +1,6 @@
 /**
  * @typedef {import('../validation-services/validation-service-interface').default} IValidationService
- * @typedef {import('../utils/event-subscriber-interface').default} IEventSubscriber
+ * @typedef {import('../event-subscribers/event-subscriber-interface').default} IEventSubscriber
  */
 
 import IInput from "./input-interface.js";

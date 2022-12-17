@@ -1,16 +1,18 @@
-import CardDetailsForm from "./card-details-form/card-details-form.js";
-import Card from "./card/card.js";
+import CardDetailsForm from "./components/card-details-form.js";
+import Card from "./components/card.js";
 import InputModule from "./input-modules/input-module.js";
 import Input from "./inputs/input.js";
-import AutoFiller from "./utils/auto-filler.js";
-import CardNumberFormatGuard from "./utils/card-number-format-guard.js";
-import CVCFormatGuard from "./utils/cvc-format-guard.js";
+import AutoFiller from "./event-subscribers/auto-filler.js";
+import CardNumberFormatGuard from "./event-subscribers/card-number-format-guard.js";
+import CVCFormatGuard from "./event-subscribers/cvc-format-guard.js";
 import CVCValidationService from "./validation-services/cvc-validation-service.js";
 import EmptyValidationService from "./validation-services/empty-validation-service.js";
 import MonthValidationService from "./validation-services/month-validation-service.js";
 import NumberValidationService from "./validation-services/number-validation-service.js";
 import SlotsValidationService from "./validation-services/slots-validation-service.js";
 import YearValidationService from "./validation-services/year-validation-service.js";
+import CompleteMsg from "./components/complete-msg.js";
+import ElementReplacer from "./event-subscribers/element-replacer.js";
 
 export default class CardDetailsService {
 
@@ -29,6 +31,9 @@ export default class CardDetailsService {
 
         const cardElement = this.#mainElement.querySelector(".interactive-card-details-form__extender");
         this.#card = new Card(cardElement);
+
+        const completeMsgElement = this.#mainElement.querySelector(".completed");
+        const completeMsg = new CompleteMsg(completeMsgElement);
 
         this.#initializeValidators();
 
@@ -54,13 +59,15 @@ export default class CardDetailsService {
         const monthAutoFiller = new AutoFiller(this.#card.expMonthElement);
         const yearAutoFiller = new AutoFiller(this.#card.expYearElement);
         const cvcAutoFiller = new AutoFiller(this.#card.cvcElement);
-        cardNumberInput.addInputSubscribers(cardNumberGuard);
+        cardNumberInput.addInputSubscribers([cardNumberGuard, numberAutoFiller]);
         cvcInput.addInputSubscribers(cvcGuard);
-        cardNumberInput.addInputSubscribers(numberAutoFiller);
         nameInput.addInputSubscribers(nameAutoFiller);
         monthInput.addInputSubscribers(monthAutoFiller);
         yearInput.addInputSubscribers(yearAutoFiller);
         cvcInput.addInputSubscribers(cvcAutoFiller);
+
+        const elementReplacer = new ElementReplacer(completeMsgElement, formElement);
+        completeMsg.addContinueSubscribers(elementReplacer);
     }
 
 
@@ -104,7 +111,10 @@ export default class CardDetailsService {
     // ----------------------------
 
     #finishSubmit() {
-        throw new Error("Not implemented method"); //TODO
+        const formElement = this.#form.mainElement;
+        const completeMsgElement = this.#mainElement.querySelector(".completed");
+        formElement.classList.add("hidden");
+        completeMsgElement.classList.remove("hidden");
     }
 
     // ----------------------------

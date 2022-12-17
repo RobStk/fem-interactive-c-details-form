@@ -5,6 +5,7 @@
 button {
     font: inherit;
     padding: calc(spaces.$standard * 1.75);
+    cursor: pointer;
     @include corners.round-standard;
     @include color-fills.dark;
 }

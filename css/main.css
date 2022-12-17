@@ -11,6 +11,9 @@ html * {
   margin: 0;
   padding: 0;
 }
+html *.hidden {
+  display: none;
+}
 
 body {
   height: 100vh;
@@ -21,6 +24,7 @@ body {
 button {
   font: inherit;
   padding: 0.875em;
+  cursor: pointer;
   border-radius: 7px;
   border: none;
   background-color: hsl(278deg, 68%, 11%);
@@ -197,7 +201,6 @@ input[type=submit] {
   align-items: center;
   row-gap: 1.5rem;
   text-align: center;
-  display: none;
 }
 .completed h1 {
   text-transform: uppercase;
