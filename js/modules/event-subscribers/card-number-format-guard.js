@@ -38,7 +38,7 @@ export default class CardNumberFormatGuard extends IEventSubscriber {
     #emit(inputEvent) {
         const baseValue = inputEvent.target.value;
         const value = this.#manageSpaces(baseValue);
-        inputEvent.target.value = value;        
+        inputEvent.target.value = value;
     }
 
     /**

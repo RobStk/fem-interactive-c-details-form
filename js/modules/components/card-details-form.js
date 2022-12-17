@@ -4,6 +4,8 @@ export default class CardDetailsForm {
     /* Interface                                            */
     /* ---------------------------------------------------- */
 
+    get mainElement() { return this.#mainElement; }
+
     get nameInputElement() { return this.#nameInputElement; }
     get cardNumberInputElement() { return this.#cardNumberInputElement; }
     get monthInputElement() { return this.#monthInputElement; }
@@ -43,7 +45,7 @@ export default class CardDetailsForm {
     /* Private properties                                   */
     /* ---------------------------------------------------- */
 
-    /** @private */
+    /** @type {HTMLElement} */
     #mainElement;
 
     /** @type {HTMLInputElement} */
