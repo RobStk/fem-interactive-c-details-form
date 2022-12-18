@@ -201,6 +201,7 @@ input[type=submit] {
   align-items: center;
   row-gap: 1.5rem;
   text-align: center;
+  width: 100%;
 }
 .completed h1 {
   text-transform: uppercase;
@@ -264,7 +265,7 @@ input[type=submit] {
     justify-content: left;
   }
   .interactive-card-details-form__main > * {
-    max-width: 65%;
+    max-width: 420px;
     row-gap: 2.1rem;
   }
   .interactive-card-details-form .card, .interactive-card-details-form .card-front, .interactive-card-details-form .card-back {
