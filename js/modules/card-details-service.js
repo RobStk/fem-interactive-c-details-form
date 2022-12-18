@@ -4,7 +4,7 @@ import InputModule from "./input-modules/input-module.js";
 import Input from "./inputs/input.js";
 import AutoFiller from "./event-subscribers/auto-filler.js";
 import CardNumberFormatGuard from "./event-subscribers/card-number-format-guard.js";
-import CVCFormatGuard from "./event-subscribers/cvc-format-guard.js";
+import MaxLengthGuard from "./event-subscribers/max-length-guard.js";
 import CVCValidationService from "./validation-services/cvc-validation-service.js";
 import EmptyValidationService from "./validation-services/empty-validation-service.js";
 import MonthValidationService from "./validation-services/month-validation-service.js";
@@ -13,6 +13,7 @@ import SlotsValidationService from "./validation-services/slots-validation-servi
 import YearValidationService from "./validation-services/year-validation-service.js";
 import CompleteMsg from "./components/complete-msg.js";
 import ElementReplacer from "./event-subscribers/element-replacer.js";
+import FormCleaner from "./event-subscribers/form-cleaner.js";
 
 export default class CardDetailsService {
 
@@ -53,21 +54,24 @@ export default class CardDetailsService {
 
         //Event Subscribers
         const cardNumberGuard = new CardNumberFormatGuard();
-        const cvcGuard = new CVCFormatGuard(3);
+        const cvcGuard = new MaxLengthGuard(3);
         const numberAutoFiller = new AutoFiller(this.#card.cardNumberElement);
         const nameAutoFiller = new AutoFiller(this.#card.cardHolderElement);
         const monthAutoFiller = new AutoFiller(this.#card.expMonthElement);
+        const monthLengthGuard = new MaxLengthGuard(2);
         const yearAutoFiller = new AutoFiller(this.#card.expYearElement);
+        const yearLengthGuard = new MaxLengthGuard(2);
         const cvcAutoFiller = new AutoFiller(this.#card.cvcElement);
         cardNumberInput.addInputSubscribers([cardNumberGuard, numberAutoFiller]);
         cvcInput.addInputSubscribers(cvcGuard);
         nameInput.addInputSubscribers(nameAutoFiller);
-        monthInput.addInputSubscribers(monthAutoFiller);
-        yearInput.addInputSubscribers(yearAutoFiller);
+        monthInput.addInputSubscribers([monthLengthGuard, monthAutoFiller]);
+        yearInput.addInputSubscribers([yearLengthGuard, yearAutoFiller]);
         cvcInput.addInputSubscribers(cvcAutoFiller);
 
         const elementReplacer = new ElementReplacer(completeMsgElement, formElement);
-        completeMsg.addContinueSubscribers(elementReplacer);
+        const formCleaner = new FormCleaner(this.#form.mainElement);
+        completeMsg.addContinueSubscribers([elementReplacer, formCleaner]);
     }
 
 

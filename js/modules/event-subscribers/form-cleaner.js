@@ -4,7 +4,7 @@ import IEventSubscriber from "./event-subscriber-interface.js";
  * @class
  * @implements {IEventSubscriber}
  */
-export default class CVCFormatGuard extends IEventSubscriber {
+export default class FormCleaner extends IEventSubscriber {
 
     /* ---------------------------------------------------- */
     /* Interface                                            */
@@ -17,29 +17,41 @@ export default class CVCFormatGuard extends IEventSubscriber {
     /* ---------------------------------------------------- */
 
     /**
-     * @param {number} maxLength
+     * @param {HTMLFormElement} formElement
      */
-    constructor(maxLength = 3) {
+    constructor(formElement) {
         super();
-        this.#maxLength = maxLength;
+        this.#formElement = formElement;
     }
 
     /* ---------------------------------------------------- */
     /* Private props                                        */
     /* ---------------------------------------------------- */
 
-    /** @private */
-    #maxLength;
+    /** 
+     * @private
+     * @type {HTMLFormElement}
+     */
+    #formElement;
 
     /* ---------------------------------------------------- */
     /* Methods                                              */
     /* ---------------------------------------------------- */
 
-    /**
-     * @param {InputEvent} inputEvent
-     */
-    #emit(inputEvent) {
-        const newValue = inputEvent.target.value.substr(0, this.#maxLength);
-        inputEvent.target.value = newValue;
+    #emit() {
+        this.#clearInputs();
+    }
+
+    /** @private */
+    #clearInputs() {
+        document.location.reload();
+
+        // Alternatively, you can clear only the form.
+        // ==========
+        // const inputs = this.#formElement.querySelectorAll("input");
+        // for (const input of inputs) {
+        //     if (input.type != "submit") input.value = "";
+        // }
+        //===========
     }
 }
