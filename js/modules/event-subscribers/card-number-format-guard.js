@@ -35,10 +35,17 @@ export default class CardNumberFormatGuard extends IEventSubscriber {
     /* Methods                                              */
     /* ---------------------------------------------------- */
 
+    /**
+     * @param {InputEvent} inputEvent 
+     */
     #emit(inputEvent) {
+        const caretPosition = inputEvent.target.selectionStart;
         const baseValue = inputEvent.target.value;
-        const value = this.#manageSpaces(baseValue);
+        const value = this.#addSpaces(baseValue);
         inputEvent.target.value = value;
+
+        const newCaretPosition = this.#calculateCaretPosition(caretPosition, baseValue, value);
+        inputEvent.target.setSelectionRange(newCaretPosition, newCaretPosition);
     }
 
     /**
@@ -46,7 +53,7 @@ export default class CardNumberFormatGuard extends IEventSubscriber {
      * @param {string} value 
      * @returns {string}
      */
-    #manageSpaces(value) {
+    #addSpaces(value) {
         const partialValue = value.split(" ");
         let valueWithoutSpaces = partialValue.join("");
         valueWithoutSpaces = valueWithoutSpaces.slice(0, this.#maxLength);
@@ -57,5 +64,21 @@ export default class CardNumberFormatGuard extends IEventSubscriber {
             if (!((index + 1) % 4) && (index < (valueWithoutSpaces.length - 1))) newValue += " ";
         }
         return newValue;
+    }
+
+    /**
+     * @param {number} baseCaretPosition 
+     * @param {string} baseString 
+     * @param {string} newString 
+     * @returns {number}
+     */
+    #calculateCaretPosition(baseCaretPosition, baseString, newString) {
+        const oldStringBeforeCaret = baseString.substring(0, baseCaretPosition - 1);
+        const spacesCntBeforeCaret = oldStringBeforeCaret.split(" ").length - 1;
+        const caretPositionWithoutSpaces = baseCaretPosition - spacesCntBeforeCaret;
+        let positionToAdd = Math.floor(caretPositionWithoutSpaces / 4);
+        if (positionToAdd && !(newString % 4) && positionToAdd == newString.length) positionToAdd--;
+        const newCaretPosition = caretPositionWithoutSpaces + positionToAdd;
+        return newCaretPosition;
     }
 }
