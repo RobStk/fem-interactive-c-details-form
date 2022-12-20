@@ -53,20 +53,25 @@ export default class CardDetailsService {
         this.#inputModules.push(new InputModule(this.#form.cvcInputContainer, cvcInput));
 
         //Event Subscribers
+        const cardNumberLengthGuard = new MaxLengthGuard(16);
         const cardNumberGuard = new CardNumberFormatGuard();
-        const cvcGuard = new MaxLengthGuard(3);
         const numberAutoFiller = new AutoFiller(this.#card.cardNumberElement);
         const nameAutoFiller = new AutoFiller(this.#card.cardHolderElement);
         const monthAutoFiller = new AutoFiller(this.#card.expMonthElement);
         const monthLengthGuard = new MaxLengthGuard(2);
         const yearAutoFiller = new AutoFiller(this.#card.expYearElement);
         const yearLengthGuard = new MaxLengthGuard(2);
+        const cvcLengthGuard = new MaxLengthGuard(3);
         const cvcAutoFiller = new AutoFiller(this.#card.cvcElement);
+
+        cardNumberInput.addBeforeInputSubscribers(cardNumberLengthGuard);
         cardNumberInput.addInputSubscribers([cardNumberGuard, numberAutoFiller]);
-        cvcInput.addInputSubscribers(cvcGuard);
         nameInput.addInputSubscribers(nameAutoFiller);
-        monthInput.addInputSubscribers([monthLengthGuard, monthAutoFiller]);
-        yearInput.addInputSubscribers([yearLengthGuard, yearAutoFiller]);
+        monthInput.addBeforeInputSubscribers(monthLengthGuard);
+        monthInput.addInputSubscribers(monthAutoFiller);
+        yearInput.addBeforeInputSubscribers(yearLengthGuard);
+        yearInput.addInputSubscribers(yearAutoFiller);
+        cvcInput.addBeforeInputSubscribers(cvcLengthGuard);
         cvcInput.addInputSubscribers(cvcAutoFiller);
 
         const elementReplacer = new ElementReplacer(completeMsgElement, formElement);

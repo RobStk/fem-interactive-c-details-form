@@ -42,7 +42,11 @@ export default class MaxLengthGuard extends IEventSubscriber {
      * @param {InputEvent} inputEvent
      */
     #emit(inputEvent) {
-        const newValue = inputEvent.target.value.substr(0, this.#maxLength);
-        inputEvent.target.value = newValue;
+        let newValue = inputEvent.target.value;
+        if (inputEvent.data) newValue += inputEvent.data;
+        const partialValue = newValue.split(" ");
+        let valueWithoutSpaces = partialValue.join("");
+        console.log(valueWithoutSpaces);
+        if (valueWithoutSpaces.length > this.#maxLength) inputEvent.preventDefault();
     }
 }

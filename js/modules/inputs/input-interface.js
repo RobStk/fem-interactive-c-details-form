@@ -31,4 +31,11 @@ export default class IInput {
     addInputSubscribers() { console.warn("Virtual method must be implemented."); }
 
     // ----------------------------
+
+    /**
+     * @param {IEventSubscriber|IEventSubscriber[]} beforeInputSubscribers 
+     */
+    addBeforeInputSubscribers() { console.warn("Virtual method must be implemented."); }
+
+    // ----------------------------
 }

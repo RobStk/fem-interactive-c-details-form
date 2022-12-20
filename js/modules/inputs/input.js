@@ -18,6 +18,7 @@ export default class Input extends IInput {
     get getHTMLElement() { return this.#getHTMLElement; }
     get getValidationErrors() { return this.#getValidationErrors; }
     get addInputSubscribers() { return this.#addInputSubscribers; }
+    get addBeforeInputSubscribers() { return this.#addBeforeInputSubscribers; }
 
 
     /* ---------------------------------------------------- */
@@ -27,9 +28,8 @@ export default class Input extends IInput {
     /**
      * @param {HTMLInputElement} htmlInputElement
      * @param {IValidationService[]|IValidationService|undefined} validators
-     * @param {IEventSubscriber[]|IEventSubscriber|undefined} inputSubscribers
      */
-    constructor(htmlInputElement, validators, inputSubscribers) {
+    constructor(htmlInputElement, validators) {
         super();
         this.#mainElement = htmlInputElement;
 
@@ -38,11 +38,10 @@ export default class Input extends IInput {
         else this.#validators = [validators];
         if (!validators) this.#validators = [];
 
-        const subscribersIsArray = Array.isArray(inputSubscribers);
-        if (subscribersIsArray) this.#inputSubscribers = inputSubscribers;
-        else this.#inputSubscribers = [inputSubscribers];
-        if (!inputSubscribers) this.#inputSubscribers = [];
+        this.#inputSubscribers = [];
+        this.#beforeInputSubscribers = [];
 
+        this.#mainElement.addEventListener("beforeinput", this.#handleBeforeInput.bind(this));
         this.#mainElement.addEventListener("input", this.#handleInput.bind(this));
     }
 
@@ -65,6 +64,12 @@ export default class Input extends IInput {
      * @type {IEventSubscriber[]}
      * */
     #inputSubscribers;
+
+    /**
+     * @private 
+     * @type {IEventSubscriber[]}
+     * */
+    #beforeInputSubscribers;
 
 
     /* ---------------------------------------------------- */
@@ -100,9 +105,8 @@ export default class Input extends IInput {
      */
     #addInputSubscribers(newSubscribers) {
         if (!newSubscribers) return;
-        const newSubscribersIsArray = Array.isArray(newSubscribers);
-        if (!newSubscribersIsArray) newSubscribers = [newSubscribers];
-        newSubscribers.forEach(newSubscriber => {
+        const subsArr = this.#prepareArray(newSubscribers);
+        subsArr.forEach(newSubscriber => {
             this.#inputSubscribers.push(newSubscriber);
         });
     }
@@ -110,12 +114,52 @@ export default class Input extends IInput {
     // ----------------------------
 
     /**
+     * @param {IEventSubscriber|IEventSubscriber[]} newSubscribers
+     */
+    #addBeforeInputSubscribers(newSubscribers) {
+        if (!newSubscribers) return;
+        const subsArr = this.#prepareArray(newSubscribers);
+        subsArr.forEach(newSubscriber => {
+            this.#beforeInputSubscribers.push(newSubscriber);
+        });
+    }
+
+    // ----------------------------
+
+    /**
+     * @private
      * @param {InputEvent} inputEvent 
      */
     #handleInput(inputEvent) {
         this.#inputSubscribers.forEach(inputSubscriber => {
             inputSubscriber.emit(inputEvent);
         });
+    }
+
+    // ----------------------------
+
+    /**
+     * @private
+     * @param {InputEvent} inputEvent 
+     */
+    #handleBeforeInput(inputEvent) {
+        this.#beforeInputSubscribers.forEach(inputSubscriber => {
+            inputSubscriber.emit(inputEvent);
+        });
+    }
+
+    // ----------------------------
+
+    /**
+     * Returns the received data enclosed in an array or a copy of the received array.
+     * @private
+     * @param {any} dataToMakeArray 
+     * @returns {any[]}
+     */
+    #prepareArray(dataToMakeArray) {
+        const dataToMakeArrayIsArray = Array.isArray(dataToMakeArray);
+        if (!dataToMakeArrayIsArray) return [dataToMakeArray];
+        return [...dataToMakeArray];
     }
 
     // ----------------------------
