@@ -114,7 +114,7 @@ input[type=submit] {
 
 .card-front {
   padding: 1.3rem;
-  background-image: url("/images/bg-card-front.png");
+  background-image: url("images/bg-card-front.png");
   display: grid;
   grid-template-rows: 30% 1fr;
   gap: 25%;
@@ -146,7 +146,7 @@ input[type=submit] {
 }
 
 .card-back {
-  background-image: url("/images/bg-card-back.png");
+  background-image: url("images/bg-card-back.png");
   display: flex;
   align-items: center;
   justify-content: flex-end;
@@ -256,7 +256,7 @@ input[type=submit] {
          column-gap: 20rem;
   }
   .interactive-card-details-form__extender {
-    background-image: url("/images/bg-main-desktop.png");
+    background-image: url("images/bg-main-desktop.png");
     position: relative;
   }
   .interactive-card-details-form__main {
