@@ -73,7 +73,7 @@ export default class CardNumberFormatGuard extends IEventSubscriber {
      * @returns {number}
      */
     #calculateCaretPosition(baseCaretPosition, baseString, newString) {
-        const oldStringBeforeCaret = baseString.substring(0, baseCaretPosition - 1);
+        const oldStringBeforeCaret = baseString.substring(0, baseCaretPosition);
         const spacesCntBeforeCaret = oldStringBeforeCaret.split(" ").length - 1;
         const caretPositionWithoutSpaces = baseCaretPosition - spacesCntBeforeCaret;
         let positionToAdd = Math.floor(caretPositionWithoutSpaces / 4);
